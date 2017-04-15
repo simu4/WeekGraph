@@ -105,7 +105,7 @@ class ViewController: UIViewController {
     }
     
     func getValue(value: CGFloat, label: UILabel) {
-        label.text = String(describing: value)
+        label.text = String(describing: Int(value))
         
     }
     
@@ -129,56 +129,52 @@ class ViewController: UIViewController {
     
     func sundayTapFunc(sender:UITapGestureRecognizer) {
         tempString = sunDay.text!
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: sunDay.text!)
         
     }
     
     func mondayTapFunc(sender:UITapGestureRecognizer) {
         print(monDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: monDay.text!)
     }
     
     func tuesdayTapFunc(sender:UITapGestureRecognizer) {
         print(tuesDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: tuesDay.text!)
     }
     
     func wensdayTapFunc(sender:UITapGestureRecognizer) {
         print(wensDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: wensDay.text!)
     }
     
     func thursdayTapFunc(sender:UITapGestureRecognizer) {
         print(thursDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: thursDay.text!)
     }
     
     func fridayTapFunc(sender:UITapGestureRecognizer) {
         print(friDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: friDay.text!)
         
     }
     
     func saturdayTapFunc(sender:UITapGestureRecognizer) {
         print(saturDay.text!)
-        createToolTip(sender: sender)
+        createToolTip(sender: sender, text: saturDay.text!)
     }
     
-    func createToolTip(sender:UITapGestureRecognizer) {
+    func createToolTip(sender:UITapGestureRecognizer, text: String) {
         
         if sender.state == .ended {
             
             let touchLocation: CGPoint = sender.location(in: mainView)
-            
-            let toolTip = UIView(frame: CGRect(origin: touchLocation, size: CGSize(width: 30, height: 30)))
-           
-           
+            let label = UILabel(frame: CGRect(origin: touchLocation, size: CGSize(width: 40, height: 40)))
+            label.text = text
             
             
-            toolTip.backgroundColor = UIColor.yellow
-            view.addSubview(toolTip)
-            view.willRemoveSubview(toolTip)
-            
+            label.backgroundColor = UIColor.yellow
+            view.addSubview(label)
         }
         view.layoutSubviews()
     }
