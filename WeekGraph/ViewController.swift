@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
     @IBOutlet var sunDay: UILabel!
     @IBOutlet var monDay: UILabel!
     @IBOutlet var tuesDay: UILabel!
@@ -36,12 +35,14 @@ class ViewController: UIViewController {
     var satDayMax: CGFloat = 0
 
     
+    @IBOutlet var mainView: UIView!
     var timer: Timer!
     var refresher: UIRefreshControl!
     var loop: CGFloat = 10
     var tempLoop: CGFloat = 0
     var height: CGFloat = 0
     var width: CGFloat = 0
+    var tempString = ""
 
     
     override func viewDidLoad() {
@@ -63,9 +64,10 @@ class ViewController: UIViewController {
         thuDayMax = setMaxValue()
         friDayMax = setMaxValue()
         satDayMax = setMaxValue()
-    
+        addGesture()
         
-        
+        let gest = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        mainView.addGestureRecognizer(gest)
     }
 
     func refreshEvery03Secs() {
@@ -88,10 +90,6 @@ class ViewController: UIViewController {
         label.backgroundColor = UIColor.black
         view.setNeedsDisplay()
         height.constant = loop
-        tempLoop = height.constant/7.5
-        getValue(value: tempLoop, label: label)
-        
-        
     }
     
     func setMaxLoop(maxLoop: CGFloat, loop: CGFloat, height: NSLayoutConstraint, label: UILabel) {
@@ -101,21 +99,91 @@ class ViewController: UIViewController {
             setHeight(loop: maxLoop, height: height, label: label)
             
         }
+        getValue(value: maxLoop/7.5, label: label)
     }
     
     func setMaxValue() -> CGFloat {
-        return  CGFloat((Double(arc4random_uniform(40))*7.5))
+        return  CGFloat((Double(arc4random_uniform(40) + 1) * 7.5))
     }
     
     func getValue(value: CGFloat, label: UILabel) {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
-        label.addGestureRecognizer(tap)
         label.text = String(describing: value)
         
     }
     
-    func tapFunction() {
+    func addGesture() {
+        let sundayTap = UITapGestureRecognizer(target: self, action: #selector(sundayTapFunc))
+        sunDay.addGestureRecognizer(sundayTap)
+        let mondayTap = UITapGestureRecognizer(target: self, action: #selector(mondayTapFunc))
+        monDay.addGestureRecognizer(mondayTap)
+        let tuesdayTap = UITapGestureRecognizer(target: self, action: #selector(tuesdayTapFunc))
+        tuesDay.addGestureRecognizer(tuesdayTap)
+        let wensdayTap = UITapGestureRecognizer(target: self, action: #selector(wensdayTapFunc))
+        wensDay.addGestureRecognizer(wensdayTap)
+        let thursdayTap = UITapGestureRecognizer(target: self, action: #selector(thursdayTapFunc))
+        thursDay.addGestureRecognizer(thursdayTap)
+        let fridayTap = UITapGestureRecognizer(target: self, action: #selector(fridayTapFunc))
+        friDay.addGestureRecognizer(fridayTap)
+        let saturdayTap = UITapGestureRecognizer(target: self, action: #selector(saturdayTapFunc))
+        saturDay.addGestureRecognizer(saturdayTap)
+        
+    }
     
+    func sundayTapFunc(sender:UITapGestureRecognizer) {
+        tempString = sunDay.text!
+        if sender.state == .ended {
+            
+            let touchLocation: CGPoint = sender.location(in: mainView)
+            
+            let toolTip = UIView(frame: CGRect(origin: touchLocation, size: CGSize(width: 30, height: 30)))
+            
+            toolTip.
+            toolTip.backgroundColor = UIColor.yellow
+            view.addSubview(toolTip)
+            view.willRemoveSubview(toolTip)
+            
+        }
+        view.layoutSubviews()
+    }
+    
+    func mondayTapFunc() {
+        print(monDay.text!)
+    }
+    
+    func tuesdayTapFunc() {
+        print(tuesDay.text!)
+    }
+    
+    func wensdayTapFunc() {
+        print(wensDay.text!)
+    }
+    
+    func thursdayTapFunc() {
+        print(thursDay.text!)
+    }
+    
+    func fridayTapFunc() {
+        print(friDay.text!)
+    }
+    
+    func saturdayTapFunc() {
+        print(saturDay.text!)
+    }
+    
+    func tapped(sender:UITapGestureRecognizer){
+        let context = UIGraphicsGetCurrentContext()
+        context?.setStrokeColor(UIColor.gray.cgColor)
+        context?.setLineWidth(1)
+        
+        if sender.state == .ended {
+            
+            let touchLocation: CGPoint = sender.location(in: sender.view)
+            print("gesture")
+            print(tempString)
+            
+            String(describing: tempString).draw(in: CGRect(origin: touchLocation, size: CGSize(width: 30, height: 30)))
+            
+        }   
     }
     
     func drawLines() {
