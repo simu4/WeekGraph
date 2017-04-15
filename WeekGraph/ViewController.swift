@@ -110,11 +110,12 @@ class ViewController: UIViewController {
     func getValue(value: CGFloat, label: UILabel) {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
         label.addGestureRecognizer(tap)
+        label.text = String(describing: value)
         
     }
     
     func tapFunction() {
-        print(tempLoop)
+    
     }
     
     func drawLines() {
