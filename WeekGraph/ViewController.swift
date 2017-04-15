@@ -43,19 +43,17 @@ class ViewController: UIViewController {
     var height: CGFloat = 0
     var width: CGFloat = 0
     var tempString = ""
+    var label = UILabel()
     
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         // Add the view to the view hierarchy so that it shows up on screen
         let frame = UIScreen.main.bounds
         height = frame.height
         width = frame.width
-        print(height)
         refresher = UIRefreshControl()
         refresher.addTarget(self, action: Selector(("refresh:")), for: .valueChanged)
-        
         timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(refreshEvery03Secs), userInfo: nil, repeats: true)
         sunDayMax = setMaxValue()
         monDayMax = setMaxValue()
@@ -65,7 +63,7 @@ class ViewController: UIViewController {
         friDayMax = setMaxValue()
         satDayMax = setMaxValue()
         addGesture()
-        
+        drawLines()
     }
     
     func refreshEvery03Secs() {
@@ -127,60 +125,61 @@ class ViewController: UIViewController {
         
     }
     
-    func sundayTapFunc(sender:UITapGestureRecognizer) {
+    func sundayTapFunc(sender: UITapGestureRecognizer) {
         tempString = sunDay.text!
         createToolTip(sender: sender, text: sunDay.text!)
         
     }
     
-    func mondayTapFunc(sender:UITapGestureRecognizer) {
+    func mondayTapFunc(sender: UITapGestureRecognizer) {
         print(monDay.text!)
         createToolTip(sender: sender, text: monDay.text!)
     }
     
-    func tuesdayTapFunc(sender:UITapGestureRecognizer) {
+    func tuesdayTapFunc(sender: UITapGestureRecognizer) {
         print(tuesDay.text!)
         createToolTip(sender: sender, text: tuesDay.text!)
     }
     
-    func wensdayTapFunc(sender:UITapGestureRecognizer) {
+    func wensdayTapFunc(sender: UITapGestureRecognizer) {
         print(wensDay.text!)
         createToolTip(sender: sender, text: wensDay.text!)
     }
     
-    func thursdayTapFunc(sender:UITapGestureRecognizer) {
+    func thursdayTapFunc(sender: UITapGestureRecognizer) {
         print(thursDay.text!)
         createToolTip(sender: sender, text: thursDay.text!)
     }
     
-    func fridayTapFunc(sender:UITapGestureRecognizer) {
+    func fridayTapFunc(sender: UITapGestureRecognizer) {
         print(friDay.text!)
         createToolTip(sender: sender, text: friDay.text!)
         
     }
     
-    func saturdayTapFunc(sender:UITapGestureRecognizer) {
+    func saturdayTapFunc(sender: UITapGestureRecognizer) {
         print(saturDay.text!)
         createToolTip(sender: sender, text: saturDay.text!)
     }
     
-    func createToolTip(sender:UITapGestureRecognizer, text: String) {
-        
-        if sender.state == .ended {
-            
-            let touchLocation: CGPoint = sender.location(in: mainView)
-            let label = UILabel(frame: CGRect(origin: touchLocation, size: CGSize(width: 40, height: 40)))
-            label.text = text
-            
-            
-            label.backgroundColor = UIColor.yellow
-            view.addSubview(label)
+    func createToolTip(sender: UITapGestureRecognizer, text: String) {
+        var touchLocation = CGPoint()
+        label.removeFromSuperview()
+        switch sender.state {
+        case .ended:
+            touchLocation = sender.location(in: mainView)
+        default:
+            print("another state")
         }
-        view.layoutSubviews()
+        label = UILabel(frame: CGRect(origin: touchLocation, size: CGSize(width: 30, height: 30)))
+        label.text = text
+        label.backgroundColor = UIColor.yellow
+        view.addSubview(label)
+        view.layoutIfNeeded()
     }
     
     func drawLines() {
-        view.bounds.height
+        print(view.bounds.height)
     }
     
 }
