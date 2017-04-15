@@ -186,6 +186,7 @@
                             <constraint firstItem="zxV-wH-l0y" firstAttribute="leading" secondItem="KUl-wc-eX4" secondAttribute="trailing" constant="40" id="obJ-a3-rX7"/>
                             <constraint firstItem="FuZ-rS-JjP" firstAttribute="top" secondItem="nJa-5r-zcG" secondAttribute="bottom" constant="8" id="pVc-hP-AOj"/>
                             <constraint firstItem="36W-MZ-alf" firstAttribute="top" secondItem="nnX-ke-JcZ" secondAttribute="bottom" constant="8" id="uOk-1T-45d"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hgT-nV-GPc" secondAttribute="bottom" constant="49" id="w4z-er-sOw"/>
                             <constraint firstItem="hgT-nV-GPc" firstAttribute="leading" secondItem="Juy-8C-hIn" secondAttribute="leading" id="xKb-b2-QaO"/>
                             <constraint firstItem="KUl-wc-eX4" firstAttribute="leading" secondItem="36W-MZ-alf" secondAttribute="trailing" constant="40" id="ySg-20-sF5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Juy-8C-hIn" secondAttribute="bottom" constant="20" id="yuQ-Qo-Qry"/>
@@ -194,6 +195,7 @@
                     <connections>
                         <outlet property="friDay" destination="nJa-5r-zcG" id="Lqa-rR-vAj"/>
                         <outlet property="friDayHeight" destination="MMd-dK-ZVn" id="XhT-Pk-eZw"/>
+                        <outlet property="heightToLabel" destination="w4z-er-sOw" id="uER-4F-3tn"/>
                         <outlet property="mainView" destination="8bC-Xf-vdC" id="97s-Gt-KFR"/>
                         <outlet property="monDay" destination="hfa-Jt-vGU" id="qNy-I3-FdP"/>
                         <outlet property="monDayHeight" destination="gVl-r7-6QV" id="JS6-b2-Y1j"/>

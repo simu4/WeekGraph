@@ -34,8 +34,10 @@ class ViewController: UIViewController {
     var friDayMax: CGFloat = 0
     var satDayMax: CGFloat = 0
     
-    
     @IBOutlet var mainView: UIView!
+    @IBOutlet var heightToLabel: NSLayoutConstraint!
+    
+    
     var timer: Timer!
     var refresher: UIRefreshControl!
     var loop: CGFloat = 10
@@ -44,6 +46,7 @@ class ViewController: UIViewController {
     var width: CGFloat = 0
     var tempString = ""
     var label = UILabel()
+    var topHeight = 0
     
     
     override func viewDidLoad() {
@@ -52,6 +55,7 @@ class ViewController: UIViewController {
         let frame = UIScreen.main.bounds
         height = frame.height
         width = frame.width
+        height = height - heightToLabel.constant
         refresher = UIRefreshControl()
         refresher.addTarget(self, action: Selector(("refresh:")), for: .valueChanged)
         timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(refreshEvery03Secs), userInfo: nil, repeats: true)
@@ -67,7 +71,7 @@ class ViewController: UIViewController {
     }
     
     func refreshEvery03Secs() {
-        if loop != 350 {
+        if loop != (height - heightToLabel.constant) {
             setMaxLoop(maxLoop: sunDayMax, loop: loop, height: sunDayHeight, label: sunDay)
             setMaxLoop(maxLoop: monDayMax, loop: loop, height: monDayHeight, label: monDay)
             setMaxLoop(maxLoop: tueDayMax, loop: loop, height: tuesDayHeight, label: tuesDay)
@@ -95,16 +99,15 @@ class ViewController: UIViewController {
             setHeight(loop: maxLoop, height: height, label: label)
             
         }
-        getValue(value: maxLoop/7.5, label: label)
+        getValue(value: maxLoop/CGFloat((self.height - heightToLabel.constant)/40), label: label)
     }
     
     func setMaxValue() -> CGFloat {
-        return  CGFloat((Double(arc4random_uniform(40) + 1) * 7.5))
+        return  CGFloat(Double(arc4random_uniform(40) + 1) * Double((height - heightToLabel.constant)/40))
     }
     
     func getValue(value: CGFloat, label: UILabel) {
         label.text = String(describing: Int(value))
-        
     }
     
     func addGesture() {
@@ -122,43 +125,34 @@ class ViewController: UIViewController {
         friDay.addGestureRecognizer(fridayTap)
         let saturdayTap = UITapGestureRecognizer(target: self, action: #selector(saturdayTapFunc))
         saturDay.addGestureRecognizer(saturdayTap)
-        
     }
     
     func sundayTapFunc(sender: UITapGestureRecognizer) {
-        tempString = sunDay.text!
         createToolTip(sender: sender, text: sunDay.text!)
         
     }
     
     func mondayTapFunc(sender: UITapGestureRecognizer) {
-        print(monDay.text!)
         createToolTip(sender: sender, text: monDay.text!)
     }
     
     func tuesdayTapFunc(sender: UITapGestureRecognizer) {
-        print(tuesDay.text!)
         createToolTip(sender: sender, text: tuesDay.text!)
     }
     
     func wensdayTapFunc(sender: UITapGestureRecognizer) {
-        print(wensDay.text!)
         createToolTip(sender: sender, text: wensDay.text!)
     }
     
     func thursdayTapFunc(sender: UITapGestureRecognizer) {
-        print(thursDay.text!)
         createToolTip(sender: sender, text: thursDay.text!)
     }
     
     func fridayTapFunc(sender: UITapGestureRecognizer) {
-        print(friDay.text!)
         createToolTip(sender: sender, text: friDay.text!)
-        
     }
     
     func saturdayTapFunc(sender: UITapGestureRecognizer) {
-        print(saturDay.text!)
         createToolTip(sender: sender, text: saturDay.text!)
     }
     
@@ -179,8 +173,26 @@ class ViewController: UIViewController {
     }
     
     func drawLines() {
-        print(view.bounds.height)
+        let line = CAShapeLayer()
+        let linePath = UIBezierPath()
+        let quaterOfHeight = (height - heightToLabel.constant)/4
+        var count = 0
+        var tempHeigth = height
+        while count != 5 {
+            
+            linePath.move(to: CGPoint(x: 0, y: tempHeigth))
+            linePath.addLine(to: CGPoint(x: width, y: tempHeigth))
+            line.path = linePath.cgPath
+            line.strokeColor = UIColor.red.cgColor
+            line.lineWidth = 1
+            line.lineJoin = kCALineJoinRound
+            self.view.layer.addSublayer(line)
+            tempHeigth = tempHeigth - quaterOfHeight
+            count += 1
+        }
     }
     
+    
 }
+
 
